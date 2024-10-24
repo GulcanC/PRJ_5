@@ -6,6 +6,7 @@
 // 1. Use fetch method, it is a simple GET request, FETCH() is returning a promise. 
 // 2. Use then() which resolves the promise to a response
 // 3. Response object has a json method which is used to parse the response's body to a js object. Here json method will give me an array that holds my products. 
+// 4. json method returns also a promise, so use another then() to catch the array of products with the variable "data" that I have as an argument
 
 let url = 'http://localhost:3000/api/products';
 
@@ -26,10 +27,19 @@ function fetchData() {
     }).then(data => {
         // it will return data
         console.log(data);
+
+        // Use "createElement", "appendChild", "setAttribute" Methods
+        // setAttribute(name, value) => it adds the name of the attribute and its value, setAttribute("href", url)
+        // createElement("img") => it adds an <img> element
+        // appendChild => it adds your HTML elemnt to the existing HTML element
+
+
+
         // Then catch the errors
     }).catch(error => {
         console.log(error);
     });
 }
+
 
 fetchData();
