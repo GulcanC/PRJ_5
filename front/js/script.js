@@ -64,12 +64,12 @@ function fetchData() {
             article.appendChild(description);
             description.innerHTML = myProduct.description;
 
-
         });
 
         // Then catch the errors
     }).catch(error => {
         console.log(error);
+        alert("⚠️ Error! Fetch()!")
     });
 }
 fetchData();
