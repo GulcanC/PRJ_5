@@ -32,14 +32,44 @@ function fetchData() {
         // setAttribute(name, value) => it adds the name of the attribute and its value, setAttribute("href", url)
         // createElement("img") => it adds an <img> element
         // appendChild => it adds your HTML elemnt to the existing HTML element
+        // innerText gets the text which is between two tags
+        // You can get this information from index.html and models/Product.js
+
+        //use a loop type, I used forEach
+        data.forEach(myProduct => {
+            console.log(myProduct)
+            // here a (product Link) is a main element
+            let productLink = document.createElement('a');
+            productLink.setAttribute('href', `product.html?id=${myProduct._id}`);
+            document.getElementById('items').appendChild(productLink);
+
+            // article is child element of the a (product link)
+            let article = document.createElement('article');
+            productLink.appendChild(article);
+            // image is child element of the article
+            let image = document.createElement('img');
+            image.setAttribute('src', myProduct.imageUrl);
+            image.setAttribute('alt', myProduct.altTxt)
+            article.appendChild(image);
+
+            let title = document.createElement('h3');
+            // title.setAttribute('class', 'productName');
+            title.getElementsByClassName('productName');
+            article.appendChild(title);
+            title.innerText = myProduct.name;
+
+            // you can use innerText or innerHTML, they are same thing
+            let description = document.createElement('p');
+            description.getElementsByClassName('productDescription');
+            article.appendChild(description);
+            description.innerHTML = myProduct.description;
 
 
+        });
 
         // Then catch the errors
     }).catch(error => {
         console.log(error);
     });
 }
-
-
 fetchData();
