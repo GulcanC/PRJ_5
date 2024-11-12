@@ -75,13 +75,17 @@ function displayProduct(myProduct) {
     document.getElementById('description').appendChild(description);
     description.innerHTML = myProduct.description
 
+    // get colors option
+    // here colors is a specific name which comes from Product.js, it is an array.
+  
+    myProduct.colors.forEach(oneColor => {
+        console.log(oneColor)
+        let option = document.createElement('option');
+        document.getElementById('colors').appendChild(option);
+        option.setAttribute('value', oneColor);
+        option.innerHTML = oneColor;
 
-
-
- 
-
-
-
+    });
 
 }
 
