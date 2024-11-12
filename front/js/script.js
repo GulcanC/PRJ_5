@@ -24,9 +24,9 @@ function fetchData() {
         return response.json();
         //  console.log(data);
         // then return the response
-    }).then(data => {
-        // it will return data
-        console.log(data);
+    }).then(allProducts => {
+        // it will return allProducts
+        console.log(allProducts);
 
         // Use "createElement", "appendChild", "setAttribute" Methods
         // setAttribute(name, value) => it adds the name of the attribute and its value, setAttribute("href", url)
@@ -36,7 +36,7 @@ function fetchData() {
         // You can get this information from index.html and models/Product.js
 
         //use a loop type, I used forEach
-        data.forEach(myProduct => {
+        allProducts.forEach(myProduct => {
             console.log(myProduct)
             // here a (product Link) is a main element
             let productLink = document.createElement('a');
