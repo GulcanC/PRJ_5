@@ -148,9 +148,26 @@ function addToCart(myProduct) {
                     ✔️ Product name: ${myProduct.name}
                     ✔️ Product color: ${productObj.productColor}
                     ✔️ Selected product quantity: ${productObj.productQty}
+                    `
+                );
+
+
+            }
+
+            function alertMessage2() {
+
+                alert(
+
+                    `💜💜💜 The selected product was added to the cart!
+
+                    ✔️ Product name: ${myProduct.name}
+                    ✔️ Product color: ${productObj.productColor}
+                    ✔️ Selected product quantity: ${productObj.productQty}
                     ✔️ Total quantity for the same product: ${newQty}
                     `
                 );
+
+
             }
 
 
@@ -158,6 +175,7 @@ function addToCart(myProduct) {
                 prdLocalStorage = [];
                 prdLocalStorage.push(productObj);
                 localStorage.setItem('selectedPrd', JSON.stringify(prdLocalStorage));
+
 
                 // call alert message here
                 alertMessage();
@@ -174,19 +192,39 @@ function addToCart(myProduct) {
                 );
                 console.log(filterProduct);
 
-                if (filterProduct >= 0) {
+                if ((filterProduct >= 0)) {
 
                     var newQty = Number(productObj.productQty) + Number(prdLocalStorage[filterProduct].productQty);
                     console.log(newQty);
-                    prdLocalStorage[filterProduct].productQty = newQty;
-                    localStorage.setItem("selectedPrd", JSON.stringify(prdLocalStorage));
+                    /*  prdLocalStorage[filterProduct].productQty = newQty;
+                     localStorage.setItem("selectedPrd", JSON.stringify(prdLocalStorage));
+                     // call alert message here
+                     alertMessage2();
+                     // go to the cart page
+                     location.assign('cart.html') */
 
-                  
-                    // call alert message here
-                    alertMessage();
-                    // go to the cart page
-                    location.assign('cart.html')
+                    if (prdLocalStorage[filterProduct].productQty == 100) {
+                        alert(`❎ You have already added "${prdLocalStorage[filterProduct].productQty}" products from the product "${myProduct.name}, thus you can not choose more product! Because you can choose max 100 product for the same one!"`)
+                        window.location.reload();
+                    }
+                    else if ((prdLocalStorage[filterProduct].productQty + productObj.productQty) > 100) {
+                       alert(`❎ You have already added "${prdLocalStorage[filterProduct].productQty}" products from the product "${myProduct.name}, thus you can add max "${100 - prdLocalStorage[filterProduct].productQty}" from the same product`)
+                        window.location.reload(); 
+             
+                    }
+
+                    else if (newQty <= 100) {
+                        prdLocalStorage[filterProduct].productQty = newQty;
+                        localStorage.setItem("selectedPrd", JSON.stringify(prdLocalStorage));
+                        // call alert message here
+                        alertMessage2();
+                        // go to the cart page
+                        location.assign('cart.html')
+
+                    }
+
                 }
+
 
                 else {
                     prdLocalStorage.push(productObj);
@@ -197,9 +235,6 @@ function addToCart(myProduct) {
                     location.assign('cart.html')
                 }
             }
-
-
-
         }
 
         else if (quantity.value > 100) {
@@ -210,8 +245,6 @@ function addToCart(myProduct) {
             alert('⚠️ You can not choose negatif value ! ')
             window.location.reload();
         }
-
-
     })
 
 
