@@ -84,7 +84,7 @@ if (prdLocalStorage) {
 
                 let pPrice = document.createElement('p');
                 divSecondChild1.appendChild(pPrice);
-                pPrice.innerText = xProducts.price;
+                pPrice.innerText = xProducts.price + " Euro";
 
                 // second div under the second div
                 let divSecondChild2 = document.createElement('div');
@@ -97,20 +97,20 @@ if (prdLocalStorage) {
                 divSecondChild2.appendChild(divThirdChild1);
 
                 // p (quantity) and input under third child div element
-                let pQty = document.createElement('p');
-                divThirdChild1.appendChild(pQty);
-                pQty.innerText = "Quantity: ";
+                let pQtyTitle = document.createElement('p');
+                divThirdChild1.appendChild(pQtyTitle);
+                pQtyTitle.innerText = "Quantity: ";
 
-                let input = document.createElement('input');
-                divThirdChild1.appendChild(input);
-                input.setAttribute('type', 'number');
-                // or => input.className = "itemQuantity"
-                input.setAttribute('class', 'itemQuantity');
-                input.setAttribute('name', 'itemQuantity');
-                input.setAttribute('min', '1');
-                input.setAttribute('max', '100');
-                // or => input.value = xProduct.productQty
-                input.setAttribute('value', xProduct.productQty);
+                let prdQty = document.createElement('input');
+                divThirdChild1.appendChild(prdQty);
+                prdQty.setAttribute('type', 'number');
+                // or => prdQty.className = "itemQuantity"
+                prdQty.setAttribute('class', 'itemQuantity');
+                prdQty.setAttribute('name', 'itemQuantity');
+                prdQty.setAttribute('min', '1');
+                prdQty.setAttribute('max', '100');
+                // or => prdQty.value = xProduct.productQty
+                prdQty.setAttribute('value', xProduct.productQty);
 
                 // second div under under second child div
                 let divThirdChild2 = document.createElement('div');
@@ -118,11 +118,59 @@ if (prdLocalStorage) {
                 divSecondChild2.appendChild(divThirdChild2);
 
                 // p under second child div
-
                 let pDelete = document.createElement('p');
                 divThirdChild2.appendChild(pDelete);
                 pDelete.innerText = "Delete ";
                 pDelete.setAttribute('class', 'deleteItem');
+
+                // modify quantity
+                // use addEventListener() method which attaches an event handler to the specified element
+                // element.addEvenetListener(event, function, useCapture), thi first parameter is the type of the event (HTML DOM Event) like click, mousedown, change, cut, copy, scroll, ...
+                // we will use change HTML DOM event => the content of a form element has changed
+                // here our element is prdQty, we have already created it in this section 
+                // here prdQty is new Quantity or updated quantity, but productQty comes from the local storage, this was already stocked in the local storage
+
+                prdQty.addEventListener('change', function (event) {
+                    // event.stopPropagation()  => ornegin iki div elementin var. Bunlardan biri parent, digeri child element. mesela parent icin bir event tanilandiysa, bu child icinde gecerli olacaktir.
+                    // yani parent icindeki event child icindeki eventide gerceklestirecek. Bunu onlemek icin kullaniyoruz
+                    event.stopPropagation();
+                    console.log(typeof prdQty.value);
+                    console.log(typeof Number(prdQty.value));
+
+                    let updatedQty = Number(prdQty.value);
+
+                    if (updatedQty <= 0) {
+                        alert(' ⚠️ Negatif values and "0" are not acceptable !');
+                        window.location.reload();
+                    }
+
+                    else if (updatedQty > 100) {
+                        alert(' ⚠️ Product quantity can not be greater than 100!');
+                        window.location.reload();
+                    }
+
+                    // here productQty comes from local storage. It takes the products from local storage according to index number, then if we increase or decrase product number, it will be updated in local storage
+                    else if (updatedQty >= 1 && updatedQty <= 100) {
+                        prdLocalStorage[index].productQty = updatedQty;
+                        localStorage.setItem('selectedPrd', JSON.stringify(prdLocalStorage));
+
+               
+                        alert(
+
+                            `💜💜💜 The product quantitiy is updated!
+                          
+                            ✔️ Selected product quantity: ${updatedQty}
+                            `
+                        );
+        
+                        window.location.reload();
+
+                    }
+
+                    window.location.reload();
+                    console.log(updatedQty)
+
+                })
 
 
             });
