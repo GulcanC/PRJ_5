@@ -156,7 +156,7 @@ if (prdLocalStorage) {
                         totalPrice();
 
 
-                     alert(
+                        alert(
 
                             `💜💜💜 The product quantitiy is updated!
                           
@@ -241,10 +241,11 @@ function validateFirstName() {
     // if input is valid, update page to show succesful entry
     if (regExText.test(firstName)) {
 
-    document.getElementById('firstNameErrorMsg').innerHTML = "✅ First name is valid!"}
+        document.getElementById('firstNameErrorMsg').innerHTML = "✅ First name is valid!"
+    }
 
     else {
-        document.getElementById('firstNameErrorMsg').innerText = "⚠️ Please enter a valid name using 3-10 characters! "
+        document.getElementById('firstNameErrorMsg').innerText = '⚠️ Please enter a valid name using 3-10 characters!'
     }
 
 
@@ -253,14 +254,61 @@ function validateFirstName() {
 function validateLastName() {
 
     let lastName = document.getElementById('lastName').value;
+    console.log(lastName);
+
+    if (regExText.test(lastName)) {
+        document.getElementById('lastNameErrorMsg').innerText = '✅ Last name is valid!'
+    }
+    else {
+        document.getElementById('lastNameErrorMsg').innerText = '⚠️ Please enter a valid last name using 3-10 characters!'
+    }
 }
 
 
+function validateAdresse() {
+    let adress = document.getElementById('address').value;
+    console.log(adress);
+
+    if (regExAddress.test(adress)) {
+        document.getElementById('addressErrorMsg').innerHTML = '✅ Addresse is valid!'
+    }
+    else {
+        document.getElementById('addressErrorMsg').innerHTML = "⚠️ Format E.g.: House No, Street name, Postcode"
+    }
+}
+
+function validateVille() {
+    let ville = document.getElementById('city').value;
+    console.log(ville)
+
+    if(regExText.test(ville)) {
+        document.getElementById('cityErrorMsg').innerText = '✅ Addresse is valid!'
+    }
+    else {
+        document.getElementById('cityErrorMsg').innerText = '⚠️ Please enter a valid city name using 3-10 characters!'
+    }
+}
+
+function validateEmail() {
+    let email = document.getElementById('email').value
+    console.log(email)
+
+    if(regExEmail.test(email)) {
+        document.getElementById('emailErrorMsg').innerHTML = '✅ Addresse is valid!'
+    }
+    else {
+        document.getElementById('emailErrorMsg').innerHTML = '⚠️ Please enter a valid email!'
+    }
+}
 
 var formSubmitButton = document.querySelector('.cart__order__form');
 
-formSubmitButton.addEventListener('change', function() {
-    validateFirstName(firstName)
+formSubmitButton.addEventListener('change', function () {
+    validateFirstName()
+    validateLastName()
+    validateAdresse()
+    validateVille()
+    validateEmail()
 
 })
 
