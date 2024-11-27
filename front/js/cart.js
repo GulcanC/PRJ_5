@@ -123,7 +123,7 @@ if (prdLocalStorage) {
                 pDelete.innerText = "Delete ";
                 pDelete.setAttribute('class', 'deleteItem');
 
-                // modify quantity
+                // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ modify quantity
                 // use addEventListener() method which attaches an event handler to the specified element
                 // element.addEvenetListener(event, function, useCapture), thi first parameter is the type of the event (HTML DOM Event) like click, mousedown, change, cut, copy, scroll, ...
                 // we will use change HTML DOM event => the content of a form element has changed
@@ -153,16 +153,17 @@ if (prdLocalStorage) {
                     else if (updatedQty >= 1 && updatedQty <= 100) {
                         prdLocalStorage[index].productQty = updatedQty;
                         localStorage.setItem('selectedPrd', JSON.stringify(prdLocalStorage));
+                        totalPrice();
 
-               
-                        alert(
+
+                     alert(
 
                             `💜💜💜 The product quantitiy is updated!
                           
                             ✔️ Selected product quantity: ${updatedQty}
                             `
                         );
-        
+
                         window.location.reload();
 
                     }
@@ -171,11 +172,99 @@ if (prdLocalStorage) {
                     console.log(updatedQty)
 
                 })
+                console.log(prdLocalStorage[index])
 
+
+                // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ delete product
+
+                pDelete.addEventListener('click', () => {
+                    // remove 1 element at index i, if you write 2 it will delete 2 elements, fonciton flech
+
+                    prdLocalStorage.splice(index, 1);
+
+                    // send the new data to the localStorage
+                    localStorage.setItem('selectedPrd', JSON.stringify(prdLocalStorage));
+                    console.log(prdLocalStorage)
+
+                    alert("⚠️ The selected product will be deleted from your cart!");
+                    window.location.reload();
+
+                })
+
+
+                // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ total price
+
+                var inputQty = document.querySelectorAll('.itemQuantity');
+                console.log(inputQty)
+                function totalPrice() {
+
+                    // determine total quantity and total price for the first time
+                    let totalQuantity = 0;
+                    let totalPrice = 0;
+
+                    inputQty.forEach(element => {
+                        totalQuantity += Number(inputQty[index].value);
+                        totalPrice += Number((inputQty[index].value) * (xProducts.price))
+
+                    });
+
+                    let pTotalQty = document.getElementById('totalQuantity');
+                    pTotalQty.innerHTML = totalQuantity;
+
+                    let pTotalPrice = document.getElementById('totalPrice');
+                    pTotalPrice.innerText = totalPrice;
+
+
+                }
+
+                totalPrice();
 
             });
     });
 }
+
+// FORM
+
+
+// I will use regExText for three values; firstName, lastName and city
+// It should be minimum three characters and max 10 characters
+
+var regExText = /^[a-zA-Z\s\'\-]{3,10}$/; // use regExText for three values; firstName, lastName and city
+var regExAddress = /^[0-9]{1,5}[" "]{1}[a-zA-z0-9/\\''(),-\s]{2,255}[" "]{1}[0-9]{5}$/;
+var regExEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+
+function validateFirstName() {
+
+    let firstName = document.getElementById('firstName').value;
+    console.log(firstName);
+
+    // if input is valid, update page to show succesful entry
+    if (regExText.test(firstName)) {
+
+    document.getElementById('firstNameErrorMsg').innerHTML = "✅ First name is valid!"}
+
+    else {
+        document.getElementById('firstNameErrorMsg').innerText = "⚠️ Please enter a valid name using 3-10 characters! "
+    }
+
+
+}
+
+function validateLastName() {
+
+    let lastName = document.getElementById('lastName').value;
+}
+
+
+
+var formSubmitButton = document.querySelector('.cart__order__form');
+
+formSubmitButton.addEventListener('change', function() {
+    validateFirstName(firstName)
+
+})
+
+
 
 
 
